@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #encoding: utf8
-inport rospy, cv2
+import rospy, cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
