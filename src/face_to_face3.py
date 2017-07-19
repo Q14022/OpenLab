@@ -9,7 +9,7 @@ class FaceToFace():
         sub = rospy.Subscriber("/cv_camera/image_raw", Image, self.get_image)
         self.bridge = CvBridge()
         self.image_org = None
-        self.pub = rospy.Publisher("face", Image, queue_size=1)
+	self.pub = rospy.Publisher("face", Image, queue_size=1)
 
     def monitor(self,rect,org):
         if rect is not None:
@@ -42,11 +42,16 @@ class FaceToFace():
             self.monitor(r,org)
             return r
 
+        r = face[0]
+        cv2.rectangle(org,tuple(r[0:2]),tuple(r[0:2]+r[2:4]),(0,255,255),4)
+        cv2.imwrite("/tmp/img.jpg",org)
+        return "detected"
+
 if __name__ == '__main__':
     rospy.init_node('face_to_face')
     fd = FaceToFace()
 
-    rate = rospy.Rate(10)
-    while not rospy.is_shutdown():
-        rospy.loginfo(fd.detect_face())
-        rate.sleep()
+	rate = rospy.Rate(10)
+	while not rospy.is_shutdown():
+		rospy.loginfo(fd.detect_face())
+		rate.sleep()
